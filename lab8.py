@@ -27,6 +27,12 @@ def evaluate_variance_equality(sample1, sample2, alpha=0.05):
     f_stat = max(var1, var2) / min(var1, var2)
     
     df1 = len(sample1) - 1 if var1 > var2 else len(sample2) - 1
+    df2 = len(sample2) - 1 if var1 > var2 else len(sample1) - 1
+    
+    f_crit = stats.f.ppf(1 - alpha, df1, df2)
+    
+    is_equal = f_stat < f_crit
+    return f_stat, f_crit, is_equal
 
 
 def visualize_lab_results(samples, labels, results):
